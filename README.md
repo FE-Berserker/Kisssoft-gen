@@ -8,7 +8,7 @@ pyffalo 仓本身不调用 KISSsoft（运行时零依赖）；全部「调用 KI
 
 - 环境：Windows + 本机 KISSsoft 2026 + pywin32（pyffalo 的 `.venv` 即可）。COM 占 license 席位。
 - 定位 pyffalo checkout：设 `PYFFALO_ROOT`，或直接在 pyffalo 仓库根运行脚本。
-- 例：`python scripts/gen_clamp_connection_kisssoft.py`（金样收割）；`python scripts/gen_key_joint_kisssoft.py --scan-klambda`（系数扫描）。逐脚本对应关系见 `references/module-index.md`，COM 机制坑见 `references/com-mechanics.md`，工作流与配方见 `SKILL.md`。
+- 例：`python scripts/gen_clamp_connection_kisssoft.py`（金样收割）；`python scripts/gen_key_joint_kisssoft.py --scan-klambda`（系数扫描）。选官方算例先查 `references/example-catalog.md`（example/ 全量 278 案清单，`python scripts/gen_example_catalog.py` 再生）。逐脚本对应关系见 `references/module-index.md`，COM 机制坑见 `references/com-mechanics.md`，工作流与配方见 `SKILL.md`。
 
 ## 自检
 

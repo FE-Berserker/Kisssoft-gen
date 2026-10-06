@@ -1,6 +1,6 @@
 # 模块 → 脚本 → 落点 索引
 
-金样 / 快照路径均相对 pyffalo checkout 根（由 `scripts/pyffalo_root.py` 解析）。「权威文档」= pyffalo 仓内该模块公式链与机制坑的记录处；本表不复制内容，只给坐标。
+金样 / 快照路径均相对 pyffalo checkout 根（由 `scripts/pyffalo_root.py` 解析）。「权威文档」= pyffalo 仓内该模块公式链与机制坑的记录处；本表不复制内容，只给坐标。KISSsoft 官方算例的逐案全量清单（哪个模块有哪些 example 文件）另见 `example-catalog.md`。
 
 | 模块 | 脚本（scripts/） | pyffalo 组件 | 金样 / 快照 | 权威文档 |
 | --- | --- | --- | --- | --- |

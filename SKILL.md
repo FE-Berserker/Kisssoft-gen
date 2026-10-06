@@ -20,13 +20,14 @@ pyffalo 运行时**不依赖** KISSsoft；本 skill 承载全部「调用 KISSso
 | --- | --- | --- |
 | 通用 COM | kisssoft_com_probe.py / _scan.py / _catalog.py | Z90 例驱动的探针 / 工况扫描 / 目录扫描（调用形态可复制到任意模块） |
 | KDB/DAT 逆向 | kdb_reader.py / kdb_export.py / parse_kisssoft_kdb.py | KISSsoft 二进制 KDB 表读取导出（UTF-16 字符串区 + double 定长 stride）、Z092TYP 快照 |
+| 算例目录 | gen_example_catalog.py | 只读遍历 `C:\KISSsoft 2026\example\` 再生 `references/example-catalog.md`（官方算例全量清单，371 文件 / 47 模块 278 案 + KISSsys 48 + 附件 45；选案先查它） |
 | 例库镜像 | gen_kisssoft_examples.py | 官方算例库 → pyffalo `examples/kisssoft/` 逐模块映射生成 |
 | 收割器 / 扫描器 | gen_&lt;模块&gt;_kisssoft.py、harvest_kisssoft_w10/z91.py、scan_bolt_m40_kisssoft.py | 金样收割（`tests/golden/`）+ 系数表扫描（`tools/data/`），逐件对应关系见 references/module-index.md |
 
 ## 标准对账工作流（新模块移植 / 既有模块追口径共用）
 
 1. **读权威文档**：pyffalo `docs/KISSSOFT.md` 对应专项节（公式链 + 机制坑全录）与 `docs/specs/<任务>.md`。勿凭记忆写公式。
-2. **探针**：拿官方算例（`C:\KISSsoft 2026\example\`，扩展名 = 模块号）跑一遍，dump 全变量（`GetVar` 逐个 try/except，或 `GetVarAsJson`）。
+2. **选案与探针**：官方算例全量清单在 `references/example-catalog.md`（模块 × 案例 × pyffalo 对应 × 收割器 × 镜像；无 KISSsoft 的机器直接读该档）。选案后跑一遍 dump 全变量（`GetVar` 逐个 try/except，或 `GetVarAsJson`）。
 3. **变体扫描钉口径**：文件变体路线改输入（勿 SetVar），单因子扫出公式结构（系数 / 钳位 / 判废面）。
 4. **写收割器**：照 `scripts/gen_clamp_connection_kisssoft.py` 骨架（见下方配方），覆盖矩阵成案、幂等重跑。
 5. **金样落盘 + 对账**：金样 JSON 入 pyffalo `tests/golden/<族>/`，pyffalo 侧写 golden 测试（挂 `golden` marker），容差分档在测试内注明。
@@ -63,6 +64,7 @@ finally:
 
 - `references/com-mechanics.md` —— COM 机制坑全集（SetVar 陷阱 / 文件变体格式 / 材料库锁 / PowerShell 边界 / 类型库读取 / license）。
 - `references/module-index.md` —— 模块 → 脚本 → pyffalo 组件 → 金样/快照落点 → 权威文档 的逐件索引。
+- `references/example-catalog.md` —— KISSsoft 官方算例全量目录（47 模块 278 案逐案文件名 + KISSsys 系统档），选案 / 调用的第一入口。
 - pyffalo `docs/KISSSOFT.md` 各专项节 —— 公式链与口径的**唯一权威**（本 skill 不重复维护公式）。
 
 ## 仓库维护
