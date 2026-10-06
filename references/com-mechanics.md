@@ -33,6 +33,7 @@
 - 带公差的几何量（da/df/x/san/Wk…）GetVar 回吐**四元组多行串**：`nul=<公称>¶E=<上偏差>¶i=<下偏差>¶m=<均值>`——对账取 `nul` 行的公称值，勿把整串当 float。
 - 存档键 ≈ COM 变量名（`ZR[0].dB` 直取即中），但**部分键名不达**：Z011 实测 `ZR[0].sn / .ha / .hf` GetVar 回空串——变量名录以 RPT 模板花括号集为准（勿信存档键全集）。
 - 存档文件本身即离线基准：UTF-16 键值文本内含 KISSsoft 计算缓存值（如 `ZR[0].dB=15.9747…`），无 COM/席位也能对账（本节即由此交叉验证）。
+- Z 系齿轮（Z011 二轮实测，2026-10-06）：**检测尺寸藏在 `ZR[i].KM.*` 命名空间**——`KM.Wk.nul/.E/.i` 公法线、`KM.k` 跨齿数、`KM.DMeff` 有效量径、`KM.MdK`/`KM.MrK` 双球/单球距（裸名 `ZR[0].Wk` 回偏差四元组且非公称值）；而 `sn/sc/hac/dFf 公称/Linv/KsiFa/h/ha/hf/cp` 为 **report-only**（KVAR 无名、GetVar 全空串，`.nul` 后缀也不达），只能走报告文本或由公差链间接印证。变量名普查：`scripts/kdb_export.py` 导 `kdb/KVAR.KDB`（3104 行，按 MODULE 列过滤）。
 
 ## PowerShell 边界
 
