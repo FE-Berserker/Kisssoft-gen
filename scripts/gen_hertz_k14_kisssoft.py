@@ -29,8 +29,8 @@ K014 特有口径（2026-10-02 调研钉死，docs/specs/k14-hertz.md）：
 
 用法::
 
-    python tools/gen_hertz_k14_kisssoft.py            # 金样收割
-    python tools/gen_hertz_k14_kisssoft.py --scan     # δ 扫描存证
+    python scripts/gen_hertz_k14_kisssoft.py            # 金样收割
+    python scripts/gen_hertz_k14_kisssoft.py --scan     # δ 扫描存证
 """
 
 from __future__ import annotations
@@ -40,7 +40,9 @@ import re
 import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
+import pyffalo_root
+
+REPO = pyffalo_root.repo_root()
 GOLDEN = REPO / "tests/golden/hertz/kisssoft_k14.json"
 SCAN_OUT = REPO / "tools/data/hertz_k14/norden_scan.json"
 KISS_EXAMPLE = Path("C:/KISSsoft 2026/example/04 Hertzian Pressure.K14")

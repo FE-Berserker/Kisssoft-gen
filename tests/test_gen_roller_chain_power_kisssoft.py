@@ -7,7 +7,7 @@
   已被清空）。
 
 KISSsoft 算例与 COM 均为合成替身（模块常量 monkeypatch 到 tmp_path），
-CI 离线可跑；真机收割链路的口径见 tools 脚本 docstring。
+CI 离线可跑；真机收割链路的口径见 scripts 脚本 docstring。
 """
 
 from __future__ import annotations
@@ -19,14 +19,17 @@ from pathlib import Path
 
 import pytest
 
-_TOOL = Path(__file__).resolve().parents[2] / "tools" / "gen_roller_chain_power_kisssoft.py"
+_TOOL = (Path(__file__).resolve().parents[1] / "scripts"
+         / "gen_roller_chain_power_kisssoft.py")
 _spec = importlib.util.spec_from_file_location("gen_roller_chain_power_kisssoft", _TOOL)
 mod = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(mod)
 
 
 def _patch_paths(monkeypatch, tmp_path) -> Path:
-    """EXAMPLE/OUT_CSV/CASES_DIR 指到临时目录；EXAMPLE 为合成 utf-16 算例。
+    """EXAMPLE/PROFILES/OUT_CSV/CASES_DIR 指到临时目录；EXAMPLE 与链型规格
+    均为合成件（原仓内版本隐式读真实快照 roller_chain_profiles.csv——skill
+    迁出后无仓内数据，改全合成保持离线封闭）。
 
     返回哨兵快照路径（"SENTINEL"）——断言收割失败时不被 "w" 截断。
     """
@@ -34,9 +37,16 @@ def _patch_paths(monkeypatch, tmp_path) -> Path:
     keys = ("z092k.TypID", "z092k.z1", "z092k.z2", "z092k.PN",
             "z092k.a", "z092k.n1", "z092k.n2")
     example.write_text("".join(f"{k}=0¶\n" for k in keys), encoding="utf-16")
+    profiles = tmp_path / "roller_chain_profiles.csv"
+    header = ("designation,series,p_mm,strands,roller_d1_mm,pin_d2_mm,"
+              "inner_b1_mm,outer_b2_mm,total_btot_mm,plate_h2_mm,tensile_Q_kN")
+    rows = [f"{d},X,{12.7 * (i + 1):.2f},1.0,8.5,4.45,7.75,12.7,18,11.8,17.8"
+            for i, d in enumerate(mod.SCAN)]
+    profiles.write_text("\n".join([header, *rows]) + "\n", encoding="utf-8")
     out_csv = tmp_path / "roller_chain_power_curve.csv"
     out_csv.write_text("SENTINEL", encoding="utf-8")
     monkeypatch.setattr(mod, "EXAMPLE", example)
+    monkeypatch.setattr(mod, "PROFILES", profiles)
     monkeypatch.setattr(mod, "OUT_CSV", out_csv)
     monkeypatch.setattr(mod, "CASES_DIR", tmp_path / "cases")
     return out_csv

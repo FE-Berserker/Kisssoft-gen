@@ -2,7 +2,7 @@
 
 用法（在仓库根，用 venv python）::
 
-    python tools/gen_kisssoft_w50.py --all
+    python scripts/gen_kisssoft_w50.py --all
 
 - ``--golden``：官方算例 01/02（W050）与 03/04/05（W051）全变量 dump
   → ``tests/golden/bearing_life/kisssoft_w50.json``（金样对账数据）。
@@ -25,7 +25,9 @@ from pathlib import Path
 
 import win32com.client
 
-ROOT = Path(__file__).resolve().parents[1]
+import pyffalo_root
+
+ROOT = pyffalo_root.repo_root()
 EX = Path(r"C:\KISSsoft 2026\example")
 GOLDEN_OUT = ROOT / "tests" / "golden" / "bearing_life" / "kisssoft_w50.json"
 SCAN3_OUT = ROOT / "tmp" / "harvest_w50_scan8.json"

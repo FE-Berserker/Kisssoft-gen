@@ -18,10 +18,12 @@ from pathlib import Path
 
 import win32com.client
 
+import pyffalo_root
+
 KS_EXAMPLE = Path(r"C:\KISSsoft 2026\example")
-GOLDEN = (Path(__file__).resolve().parents[1] / "tests" / "golden"
-          / "bevel_gear" / "kisssoft_z70.json")
-CASES_DIR = Path(__file__).resolve().parents[1] / "tmp" / "z70_golden_cases"
+REPO = pyffalo_root.repo_root()
+GOLDEN = REPO / "tests" / "golden" / "bevel_gear" / "kisssoft_z70.json"
+CASES_DIR = REPO / "tmp" / "z70_golden_cases"
 
 _BASES = {
     "s01": "S01 Bevel (ISO 10300 Sample 1 FM).Z70",  # noqa: E501

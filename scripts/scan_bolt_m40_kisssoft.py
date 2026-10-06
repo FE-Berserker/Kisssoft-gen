@@ -23,8 +23,8 @@ COM 机制坑（实测钉死，勿绕）：
 
 用法（需本机 KISSsoft 2026 + license，占 1 席位）::
 
-    python tools/scan_bolt_m40_kisssoft.py            # 全部变体 → tools/data/bolt/m40_scan.json.gz
-    python tools/scan_bolt_m40_kisssoft.py --group sv # 只跑 sv 组
+    python scripts/scan_bolt_m40_kisssoft.py          # 全部变体 → tools/data/bolt/m40_scan.json.gz
+    python scripts/scan_bolt_m40_kisssoft.py --group sv # 只跑 sv 组
 
 产物：tools/data/bolt/m40_scan.json.gz（gzip JSON 行数组，含既有
 tmp/bolt_m40_scan.json 的 49 行历史扫描，group 字段区分批次）；下游消费者
@@ -39,7 +39,9 @@ import json
 import re
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
+import pyffalo_root
+
+REPO = pyffalo_root.repo_root()
 SRC_CASE = Path("C:/KISSsoft 2026/example/01 Bolts (VDI 2230 Example 1).M40")
 SRC_FLANGE = Path("C:/KISSsoft 2026/example/02 Bolts (VDI 2230 Example 2).M40")
 TMP_CASE = REPO / "tmp" / "m40_scan_variant.M40"

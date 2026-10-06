@@ -19,10 +19,12 @@ from pathlib import Path
 
 import win32com.client
 
+import pyffalo_root
+
 KS_EXAMPLE = Path(r"C:\KISSsoft 2026\example")
-GOLDEN = (Path(__file__).resolve().parents[1] / "tests" / "golden"
-          / "hypoid_gear" / "kisssoft_z70_hypoid.json")
-CASES_DIR = Path(__file__).resolve().parents[1] / "tmp" / "z70_hypoid_golden_cases"
+REPO = pyffalo_root.repo_root()
+GOLDEN = REPO / "tests" / "golden" / "hypoid_gear" / "kisssoft_z70_hypoid.json"
+CASES_DIR = REPO / "tmp" / "z70_hypoid_golden_cases"
 
 _BASE = "S02 Hypoid (ISO 10300 Sample 2 FM).Z70"
 

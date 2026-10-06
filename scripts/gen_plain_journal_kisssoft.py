@@ -28,8 +28,8 @@ GetVar 缺失变量记 null（DIN 31657 专属量在 ISO 方法算例下不存�
 
 用法::
 
-    python tools/gen_plain_journal_kisssoft.py            # 金样收割
-    python tools/gen_plain_journal_kisssoft.py --scan     # ISO 特性曲线扫描
+    python scripts/gen_plain_journal_kisssoft.py            # 金样收割
+    python scripts/gen_plain_journal_kisssoft.py --scan     # ISO 特性曲线扫描
 """
 
 from __future__ import annotations
@@ -40,7 +40,9 @@ import re
 import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
+import pyffalo_root
+
+REPO = pyffalo_root.repo_root()
 GOLDEN = REPO / "tests/golden/plain_bearing/kisssoft_w70.json"
 SCAN_OUT = REPO / "tools/data/plain_bearing/iso7902_chars_scan.json.gz"
 KISS_EXAMPLE = Path("C:/KISSsoft 2026/example")

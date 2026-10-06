@@ -4,7 +4,7 @@
 
 用法：
 
-    uv run python tools/kisssoft_com_catalog.py [输出 json]
+    python scripts/kisssoft_com_catalog.py [输出 json]
 """
 
 from __future__ import annotations

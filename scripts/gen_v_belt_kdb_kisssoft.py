@@ -23,8 +23,8 @@
 
 用法::
 
-    python tools/gen_v_belt_kdb_kisssoft.py            # COM 扫描 → 快照
-    python tools/gen_v_belt_kdb_kisssoft.py --check     # 只验仓内快照锚点
+    python scripts/gen_v_belt_kdb_kisssoft.py            # COM 扫描 → 快照
+    python scripts/gen_v_belt_kdb_kisssoft.py --check     # 只验仓内快照锚点
 """
 
 from __future__ import annotations
@@ -35,7 +35,9 @@ import re
 import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
+import pyffalo_root
+
+REPO = pyffalo_root.repo_root()
 EXAMPLE = Path(r"C:/KISSsoft 2026/example/01 V Belt.Z90")
 DAT_DIR = REPO / "tools/data/z90_dat"
 OUT_CSV = REPO / "tools/data/kisssoft/v_belt_kdb.csv"

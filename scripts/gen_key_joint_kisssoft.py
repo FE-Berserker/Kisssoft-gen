@@ -27,9 +27,9 @@ True)`` + 文件变体（UTF-16 明文 ``key=value¶`` 行替换）+ ``LoadFile`
 
 用法::
 
-    python tools/gen_key_joint_kisssoft.py               # 金样收割
-    python tools/gen_key_joint_kisssoft.py --scan-klambda
-    python tools/gen_key_joint_kisssoft.py --profile
+    python scripts/gen_key_joint_kisssoft.py               # 金样收割
+    python scripts/gen_key_joint_kisssoft.py --scan-klambda
+    python scripts/gen_key_joint_kisssoft.py --profile
 """
 
 from __future__ import annotations
@@ -41,7 +41,9 @@ import re
 import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
+import pyffalo_root
+
+REPO = pyffalo_root.repo_root()
 GOLDEN = REPO / "tests/golden/key_joint/kisssoft_m2a.json"
 SCAN_OUT = REPO / "tools/data/key_joint/klambda_scan.json.gz"
 PROFILE_CSV = REPO / "tools/data/key_joint/din6885_profile.csv"

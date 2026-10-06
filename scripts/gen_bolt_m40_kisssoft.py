@@ -14,14 +14,16 @@
 
 用法（需本机 KISSsoft 2026 + license）::
 
-    python tools/gen_bolt_m40_kisssoft.py
+    python scripts/gen_bolt_m40_kisssoft.py
 """
 from __future__ import annotations
 
 import json
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
+import pyffalo_root
+
+REPO = pyffalo_root.repo_root()
 GOLDEN = REPO / "tests" / "golden" / "bolt" / "kisssoft_m40.json"
 KISS_EXAMPLE = Path("C:/KISSsoft 2026/example")
 

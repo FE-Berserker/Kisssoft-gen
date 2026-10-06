@@ -2,7 +2,7 @@
 
 Usage::
 
-    python tools/kdb_export.py <folder-or-file> [-o OUTPUT_DIR]
+    python scripts/kdb_export.py <folder-or-file> [-o OUTPUT_DIR]
 
 Creates ``OUTPUT_DIR/<KDB-stem>/<TABLE>.csv`` (UTF-8 BOM, Excel-friendly)
 plus ``OUTPUT_DIR/index.csv`` listing every exported table. Multi-language

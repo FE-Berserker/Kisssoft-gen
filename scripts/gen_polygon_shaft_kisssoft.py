@@ -22,9 +22,9 @@ COM 形态（M2A/M2E 配方）：``SetSilentMode(True)`` + ``GetModule("M02D", T
 
 用法::
 
-    python tools/gen_polygon_shaft_kisssoft.py               # 金样收割
-    python tools/gen_polygon_shaft_kisssoft.py --sections
-    python tools/gen_polygon_shaft_kisssoft.py --profile
+    python scripts/gen_polygon_shaft_kisssoft.py               # 金样收割
+    python scripts/gen_polygon_shaft_kisssoft.py --sections
+    python scripts/gen_polygon_shaft_kisssoft.py --profile
 """
 
 from __future__ import annotations
@@ -37,7 +37,9 @@ import re
 import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
+import pyffalo_root
+
+REPO = pyffalo_root.repo_root()
 sys.path.insert(0, str(REPO / "src"))
 
 GOLDEN = REPO / "tests/golden/polygon_shaft/kisssoft_m2d.json"

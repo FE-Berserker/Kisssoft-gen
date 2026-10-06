@@ -28,9 +28,9 @@ COM 形态（M2A 配方）：``SetSilentMode(True)`` + ``GetModule("M02E", True)
 
 用法::
 
-    python tools/gen_woodruff_key_kisssoft.py               # 金样收割
-    python tools/gen_woodruff_key_kisssoft.py --scan-dt
-    python tools/gen_woodruff_key_kisssoft.py --profile
+    python scripts/gen_woodruff_key_kisssoft.py               # 金样收割
+    python scripts/gen_woodruff_key_kisssoft.py --scan-dt
+    python scripts/gen_woodruff_key_kisssoft.py --profile
 """
 
 from __future__ import annotations
@@ -42,7 +42,9 @@ import re
 import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
+import pyffalo_root
+
+REPO = pyffalo_root.repo_root()
 GOLDEN = REPO / "tests/golden/woodruff_key/kisssoft_m2e.json"
 DATA_DIR = REPO / "tools/data/woodruff_key"
 ANCHORS = DATA_DIR / "klambda_anchors.json"

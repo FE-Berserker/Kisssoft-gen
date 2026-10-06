@@ -15,7 +15,9 @@ import re
 import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
+import pyffalo_root
+
+REPO = pyffalo_root.repo_root()
 KS_EXAMPLE = Path(r"C:\KISSsoft 2026\example\03 Tension Spring.F20")
 KS_DAT = Path(r"C:\KISSsoft 2026\dat")
 GOLDEN = REPO / "tests/golden/extension_spring/kisssoft_f20.json"

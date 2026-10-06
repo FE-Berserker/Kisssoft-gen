@@ -38,12 +38,12 @@ COM 机制坑（实测 2026-10-01，固化勿绕）：
 
 用法（本机 KISSsoft 2026 + license 席位空闲时）::
 
-    python tools/harvest_kisssoft_w10.py probe
-    python tools/harvest_kisssoft_w10.py section --out tools/data/din743/w10_01_section.json
-    python tools/harvest_kisssoft_w10.py scan-shoulder --out tools/data/din743/shoulder.csv
-    python tools/harvest_kisssoft_w10.py scan-const --out tools/data/din743/const_notch.csv
-    python tools/harvest_kisssoft_w10.py scan-size --out tools/data/din743/size_factor.csv
-    python tools/harvest_kisssoft_w10.py scan-surface --out tools/data/din743/surface_rz16.csv
+    python scripts/harvest_kisssoft_w10.py probe
+    python scripts/harvest_kisssoft_w10.py section --out tools/data/din743/w10_01_section.json
+    python scripts/harvest_kisssoft_w10.py scan-shoulder --out tools/data/din743/shoulder.csv
+    python scripts/harvest_kisssoft_w10.py scan-const --out tools/data/din743/const_notch.csv
+    python scripts/harvest_kisssoft_w10.py scan-size --out tools/data/din743/size_factor.csv
+    python scripts/harvest_kisssoft_w10.py scan-surface --out tools/data/din743/surface_rz16.csv
 
 产物入 ``tools/data/din743/``（seed 源快照），由 ``tools/gen_din743_seeds.py``
 消费建 ``DIN743_Notch`` / ``DIN743_Curve`` 表。
@@ -59,7 +59,9 @@ import sys
 import time
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+import pyffalo_root
+
+ROOT = pyffalo_root.repo_root()
 sys.path.insert(0, str(ROOT / "src"))
 
 EXAMPLE = r"C:\KISSsoft 2026\example\01 Shafts.W10"

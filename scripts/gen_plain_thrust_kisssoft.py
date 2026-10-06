@@ -13,8 +13,8 @@ TB/fspez 族），快照 ``tools/data/plain_bearing/thrust_chars_scan.json.gz``
 
 用法::
 
-    python tools/gen_plain_thrust_kisssoft.py            # 金样收割
-    python tools/gen_plain_thrust_kisssoft.py --scan     # 特性扫描
+    python scripts/gen_plain_thrust_kisssoft.py            # 金样收割
+    python scripts/gen_plain_thrust_kisssoft.py --scan     # 特性扫描
 """
 
 from __future__ import annotations
@@ -25,7 +25,9 @@ import re
 import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
+import pyffalo_root
+
+REPO = pyffalo_root.repo_root()
 GOLDEN = REPO / "tests/golden/plain_bearing/kisssoft_w7c.json"
 SCAN_OUT = REPO / "tools/data/plain_bearing/thrust_chars_scan.json.gz"
 KISS_EXAMPLE = Path("C:/KISSsoft 2026/example")

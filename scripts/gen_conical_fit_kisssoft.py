@@ -4,7 +4,7 @@ COM 机制坑（docs/specs/conical-interference-fit-m1b.md 背景口径）：Set
 先行；GetModule('M01B', True) 返回值丢弃、全部方法在根对象调用；
 CalculateRetVal 唯一判据；变量名录 = rpt/M01BLe0.RPT 花括号集 + KVAR 已知量。
 03/04 的 Ffmin/af/gamma_max 为内核安全驱动尺寸输出（文件值改写无效）。
-用法：``python tools/gen_conical_fit_kisssoft.py``（本机 KISSsoft 2026 + 空闲席位）。
+用法：``python scripts/gen_conical_fit_kisssoft.py``（本机 KISSsoft 2026 + 空闲席位）。
 """
 from __future__ import annotations
 
@@ -12,7 +12,9 @@ import json
 import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
+import pyffalo_root
+
+REPO = pyffalo_root.repo_root()
 GOLDEN = REPO / "tests/golden/conical_fit/kisssoft_m1b.json"
 KS_EX = Path("C:/KISSsoft 2026/example")
 CASES = {

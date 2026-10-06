@@ -22,7 +22,7 @@ beff/bnom（PG5 实测 3333.33 = 1500 × 20/9）；本脚本存 KDB 原值，组
 
 用法（仅装有 KISSsoft 的机器可跑；产物快照随仓库入库）::
 
-    python tools/harvest_kisssoft_z91.py [KISSsoft安装目录]
+    python scripts/harvest_kisssoft_z91.py [KISSsoft安装目录]
 
 默认 ``C:/KISSsoft 2026``；输出 ``tools/data/belt_sync_source.json.gz``
 （幂等重写），``gen_belt_sync_seeds.py`` 消费。
@@ -37,7 +37,9 @@ import struct
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+import pyffalo_root
+
+ROOT = pyffalo_root.repo_root()
 DEFAULT_KISS = Path("C:/KISSsoft 2026")
 OUT = ROOT / "tools" / "data" / "belt_sync_source.json.gz"
 

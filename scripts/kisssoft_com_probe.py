@@ -8,7 +8,7 @@ COM 形态见 KISSsoft-TUT-91：``Dispatch('KISSsoftCOM.KISSsoft')`` →
 
 用法：
 
-    uv run python tools/kisssoft_com_probe.py [算例路径] [输出 json]
+    python scripts/kisssoft_com_probe.py [算例路径] [输出 json]
 
 注意：COM 会另起 ``KISSsoftCOM2026.exe`` 占一个 license 席位。
 """

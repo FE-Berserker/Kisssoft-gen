@@ -1,0 +1,12 @@
+# 与 pyffalo 仓同规则（pyproject.toml [tool.ruff]）：迁移脚本零风格漂移
+target-version = "py312"
+line-length = 100
+
+[lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+
+[lint.isort]
+# pyffalo 在自家仓内经 src = ["src", "tests"] 被判 first-party；本仓脚本同样
+# import pyffalo.*（经 sys.path 指 checkout），沿用同分节防 I001 误报；
+# pyffalo_root 为本仓伴生模块。
+known-first-party = ["pyffalo", "pyffalo_root"]

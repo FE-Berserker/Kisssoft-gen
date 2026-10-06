@@ -30,8 +30,8 @@ solve → 打印输出，KISSsoft 锚点可得处附注释）。
 
 用法::
 
-    python tools/gen_kisssoft_examples.py            # 生成 examples/
-    python tools/gen_kisssoft_examples.py --run      # 生成后逐例运行验证
+    python scripts/gen_kisssoft_examples.py            # 生成 examples/
+    python scripts/gen_kisssoft_examples.py --run      # 生成后逐例运行验证
 """
 
 from __future__ import annotations
@@ -42,9 +42,11 @@ import runpy
 import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parents[1]
+import pyffalo_root
+
+REPO = pyffalo_root.repo_root()
 sys.path.insert(0, str(REPO / "src"))
-sys.path.insert(0, str(REPO / "tools"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 KS_EXAMPLE = Path(r"C:/KISSsoft 2026/example")
 OUT_ROOT = REPO / "examples" / "kisssoft"

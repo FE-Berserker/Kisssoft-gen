@@ -21,8 +21,8 @@ min(Pc1 链板疲劳, Pc2 滚子/套筒疲劳, Pc3 销套磨损)），输出
 
 用法::
 
-    python tools/gen_roller_chain_power_kisssoft.py            # 扫描 → 快照
-    python tools/gen_roller_chain_power_kisssoft.py --dry-run  # 只生成变体不跑 COM
+    python scripts/gen_roller_chain_power_kisssoft.py            # 扫描 → 快照
+    python scripts/gen_roller_chain_power_kisssoft.py --dry-run  # 只生成变体不跑 COM
 """
 
 from __future__ import annotations
@@ -33,7 +33,9 @@ import re
 import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
+import pyffalo_root
+
+REPO = pyffalo_root.repo_root()
 EXAMPLE = Path(r"C:/KISSsoft 2026/example/04 Chain Drive.Z92")
 PROFILES = REPO / "tools/data/kisssoft/roller_chain_profiles.csv"
 OUT_CSV = REPO / "tools/data/kisssoft/roller_chain_power_curve.csv"

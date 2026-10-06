@@ -16,7 +16,7 @@
 
 用法::
 
-    python tools/parse_kisssoft_kdb.py [Z000.KDB 路径] [-o 输出 CSV]
+    python scripts/parse_kisssoft_kdb.py [Z000.KDB 路径] [-o 输出 CSV]
 """
 
 from __future__ import annotations
@@ -28,8 +28,10 @@ import struct
 import sys
 from pathlib import Path
 
+import pyffalo_root
+
 DEFAULT_KDB = Path(r"C:/KISSsoft 2026/kdb/Z000.KDB")
-DEFAULT_OUT = Path(__file__).parent / "data" / "kisssoft" / "roller_chain_profiles.csv"
+DEFAULT_OUT = pyffalo_root.repo_root() / "tools" / "data" / "kisssoft" / "roller_chain_profiles.csv"
 NAME_PREFIX = "DIN ISO 606:2012 "
 ROW_DOUBLES = 16
 STRIDE = ROW_DOUBLES * 8
