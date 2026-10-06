@@ -28,6 +28,12 @@
 - 材料库锁：库材料（DBID ≠19999）的 Rm/Rp 等快照改档无效，内核按 DBID 从库重读；own-input 要 **DBID=19999 + 全部出现处同改**（W10 的 `shafts[0].material.DBID` 在文件里出现两次，只改第一处会被第二处覆盖——症状：Kf 跨 Rm 逐位不变）。
 - 反例（勿走）：M2A 调研期 PowerShell 探针 SetVar 扫描**全零不可信**（同值 no-op 也判废）；扫描一律 Python + pywin32。
 
+## 公差四元组与变量名实测（Z011 探针，2026-10-06）
+
+- 带公差的几何量（da/df/x/san/Wk…）GetVar 回吐**四元组多行串**：`nul=<公称>¶E=<上偏差>¶i=<下偏差>¶m=<均值>`——对账取 `nul` 行的公称值，勿把整串当 float。
+- 存档键 ≈ COM 变量名（`ZR[0].dB` 直取即中），但**部分键名不达**：Z011 实测 `ZR[0].sn / .ha / .hf` GetVar 回空串——变量名录以 RPT 模板花括号集为准（勿信存档键全集）。
+- 存档文件本身即离线基准：UTF-16 键值文本内含 KISSsoft 计算缓存值（如 `ZR[0].dB=15.9747…`），无 COM/席位也能对账（本节即由此交叉验证）。
+
 ## PowerShell 边界
 
 只读 dump（LoadFile + Calculate + GetVar + Report）可用 PowerShell 原生 COM：`New-Object -ComObject 'KISSsoftCOM.KISSsoft'`——免 pywin32，Z91/Z90 调研期大量使用。**SetVar / 扫描不用 PowerShell**（见上反例）。
