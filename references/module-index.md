@@ -18,6 +18,7 @@
 | M2A 平键 | gen_key_joint_kisssoft.py（`--scan-klambda` 672×2 曲面、`--profile` DIN 6885 剖面） | KeyJoint | `tools/data/key_joint/`、`tests/golden/key_joint/` | docs/specs/key-joint-m2a.md |
 | M2D 多边形轴 | gen_polygon_shaft_kisssoft.py（`--sections` 截面量 + Wp 扫描、`--profile` DAT 剖面） | PolygonShaftJoint | `tools/data/polygon_shaft/`、`tests/golden/polygon_shaft/` | docs/specs/polygon-shaft-m2d.md |
 | M2E 半圆键 | gen_woodruff_key_kisssoft.py（`--scan-dt` 288 行、`--profile` DAT 剖面） | WoodruffKeyJoint | `tools/data/woodruff_key/`、`tests/golden/woodruff_key/` | docs/specs/woodruff-key-m2e.md |
+| K17 塑料件 | gen_plastics_manager_kisssoft.py（官方算例 09 + 45 变体共 46 案；统计三法×dp 矩阵 / 合成案消歧 κ / 试验齿轮几何变体 / 传热矩阵 / 齿面失效；UTF-16 变体 `key=value¶\r\n` 行结构正则锚定替换、单 BOM） | PlasticGearTestSN | `tests/golden/plastic_gear/` | docs/specs/kisssoft-k17.md |
 | Z70 锥齿轮 / 准双曲面 | gen_bevel_gear_kisssoft.py、gen_hypoid_gear_kisssoft.py | BevelGearPair、HypoidGearPair | `tests/golden/bevel_gear/`、`tests/golden/hypoid_gear/` | docs/specs/bevel-hypoid-z70.md |
 | F20 拉伸弹簧 | gen_extension_spring_kisssoft.py（`--scan-wire` 线材松弛 LSQ、`--golden`） | HelicalTensionSpring | `tools/data/spring_wire/wire_harvest.json`、`tests/golden/extension_spring/` | docs/specs/extension-spring-f20.md |
 | F30 腿簧 | gen_leg_spring_kisssoft.py | LegSpring | `tests/golden/leg_spring/` | docs/specs/leg-spring-f30.md |
