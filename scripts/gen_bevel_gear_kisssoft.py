@@ -28,6 +28,8 @@ CASES_DIR = REPO / "tmp" / "z70_golden_cases"
 _BASES = {
     "s01": "S01 Bevel (ISO 10300 Sample 1 FM).Z70",  # noqa: E501
     "din03": "03 Bevel (DIN 3991 FH).z70",
+    "kn01": "01 Bevel (KN 3028 FH).z70",
+    "kn08": "08 Bevel (KN 3025 Palloid FH).Z70",
 }  # noqa: E501
 
 VARS = [
@@ -51,8 +53,9 @@ VARS = [
     "ZPP[0].Fuss.sigF0", "ZPP[0].Fuss.sigF", "ZPP[0].Fuss.sigFP", "ZPP[0].Fuss.SF",
     "ZPP[1].Fuss.YF", "ZPP[1].Fuss.YS", "ZPP[1].Fuss.sFn", "ZPP[1].Fuss.sigF0",
     "ZPP[1].Fuss.sigFP", "ZPP[1].Fuss.SF",
-    "ZPP[1].Fuss.hF", "ZPP[1].Fuss.roF", "ZPP[1].Fuss.alfen",
+    "ZPP[1].Fuss.hF", "ZPP[1].Fuss.roF", "ZPP[1].Fuss.alfen", "ZPP[1].Fuss.sFn",
     "ZPP[1].Flanke.sigHP", "ZPP[1].Flanke.SH",
+    "KegKlP.m0", "KegKlP.ro", "KegKlP.Md", "KegKlP.Rv",
     "ZP[0].Flanke.sigH0", "ZP[0].Flanke.sigH", "ZPP[0].Flanke.sigHP", "ZPP[0].Flanke.SH",
     "ZPP[0].Fa", "ZPP[0].Fr",
 ]
@@ -90,6 +93,12 @@ CASES: list[tuple[str, str, dict[str, object]]] = [
     ("din_official", "din03", {}),
     ("din_b25", "din03", {"ZR[0].b": "25", "ZR[1].b": "25"}),
     ("din_z16", "din03", {"ZkegR[0].z": "16"}),
+    # ---- Klingelnberg record 案（几何/m0 闭式链断言；强度为内核 KN3030 参考）----
+    ("kn01_official", "kn01", {}),
+    ("kn01_z2_45", "kn01", {"ZkegR[1].z": "45"}),
+    ("kn01_b35", "kn01", {"ZR[0].b": "35", "ZR[1].b": "35"}),
+    ("kn08_official", "kn08", {}),
+    ("kn08_b35", "kn08", {"ZR[0].b": "35", "ZR[1].b": "35"}),
 ]
 
 

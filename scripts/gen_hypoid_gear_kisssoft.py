@@ -26,7 +26,11 @@ REPO = pyffalo_root.repo_root()
 GOLDEN = REPO / "tests" / "golden" / "hypoid_gear" / "kisssoft_z70_hypoid.json"
 CASES_DIR = REPO / "tmp" / "z70_hypoid_golden_cases"
 
-_BASE = "S02 Hypoid (ISO 10300 Sample 2 FM).Z70"
+_BASES = {
+    "s02": "S02 Hypoid (ISO 10300 Sample 2 FM).Z70",
+    "kn09": "09 Hypoid (KN 3026 Palloid FH).Z70",
+    "kn10": "10 Hypoid (KN 3029 Zyklo Palloid FH).Z70",
+}
 
 VARS = [
     "RechSt.RechenMethID",
@@ -51,34 +55,39 @@ VARS = [
     "ZPP[1].Fuss.sigFP", "ZPP[1].Fuss.SF",
     "ZPP[1].Fuss.hF", "ZPP[1].Fuss.roF", "ZPP[1].Fuss.alfen", "ZPP[1].Fuss.sFn",
     "ZPP[1].Flanke.sigHP", "ZPP[1].Flanke.SH",
+    "KegKlP.m0", "KegKlP.ro", "KegKlP.Md", "KegKlP.Rv",
     "ZP[0].Flanke.sigH0", "ZP[0].Flanke.sigH",
     "ZPP[0].Flanke.sigHP", "ZPP[0].Flanke.SH",
 ]
 
 _d2r = lambda d: repr(math.radians(d))  # noqa: E731
 
-CASES: list[tuple[str, dict[str, object]]] = [
-    ("official", {}),
-    ("z1_11", {"ZkegR[0].z": "11"}),
-    ("z1_16", {"ZkegR[0].z": "16"}),
-    ("z1_20", {"ZkegR[0].z": "20"}),
-    ("z2_38", {"ZkegR[1].z": "38"}),
-    ("z2_50", {"ZkegR[1].z": "50"}),
-    ("b26", {"ZR[0].b": "26", "ZR[1].b": "26"}),
-    ("b36", {"ZR[0].b": "36", "ZR[1].b": "36"}),
-    ("betm1_45", {"ZkegR[0].WI.betm": _d2r(45)}),
-    ("betm1_55", {"ZkegR[0].WI.betm": _d2r(55)}),
-    ("a10", {"ZkegP[0].a": "10"}),
-    ("a20", {"ZkegP[0].a": "20"}),
-    ("a25", {"ZkegP[0].a": "25"}),
-    ("de2_160", {"ZkegR[1].de": "160"}),
-    ("de2_180", {"ZkegR[1].de": "180"}),
-    ("Sigma80", {"ZP[0].Sigma": _d2r(80)}),
-    ("Sigma100", {"ZP[0].Sigma": _d2r(100)}),
-    ("KA1.0", {"ZS.KA": "1.0"}),
-    ("KA1.5", {"ZS.KA": "1.5"}),
-    ("KHbbe1.0", {"ZkegP[0].KHbbe": "1.0"}),
-    ("KHbbe1.3", {"ZkegP[0].KHbbe": "1.3"}),
+CASES: list[tuple[str, str, dict[str, object]]] = [
+    ("official", "s02", {}),
+    ("z1_11", "s02", {"ZkegR[0].z": "11"}),
+    ("z1_16", "s02", {"ZkegR[0].z": "16"}),
+    ("z1_20", "s02", {"ZkegR[0].z": "20"}),
+    ("z2_38", "s02", {"ZkegR[1].z": "38"}),
+    ("z2_50", "s02", {"ZkegR[1].z": "50"}),
+    ("b26", "s02", {"ZR[0].b": "26", "ZR[1].b": "26"}),
+    ("b36", "s02", {"ZR[0].b": "36", "ZR[1].b": "36"}),
+    ("betm1_45", "s02", {"ZkegR[0].WI.betm": _d2r(45)}),
+    ("betm1_55", "s02", {"ZkegR[0].WI.betm": _d2r(55)}),
+    ("a10", "s02", {"ZkegP[0].a": "10"}),
+    ("a20", "s02", {"ZkegP[0].a": "20"}),
+    ("a25", "s02", {"ZkegP[0].a": "25"}),
+    ("de2_160", "s02", {"ZkegR[1].de": "160"}),
+    ("de2_180", "s02", {"ZkegR[1].de": "180"}),
+    ("Sigma80", "s02", {"ZP[0].Sigma": _d2r(80)}),
+    ("Sigma100", "s02", {"ZP[0].Sigma": _d2r(100)}),
+    ("KA1.0", "s02", {"ZS.KA": "1.0"}),
+    ("KA1.5", "s02", {"ZS.KA": "1.5"}),
+    ("KHbbe1.0", "s02", {"ZkegP[0].KHbbe": "1.0"}),
+    ("KHbbe1.3", "s02", {"ZkegP[0].KHbbe": "1.3"}),
+    # ---- Klingelnberg record 案 ----
+    ("kn09_official", "kn09", {}),
+    ("kn10_official", "kn10", {}),
+
 ]
 
 
@@ -105,15 +114,15 @@ def _norm(v) -> object:
 
 def main() -> None:
     CASES_DIR.mkdir(parents=True, exist_ok=True)
-    base = (KS_EXAMPLE / _BASE).read_text("utf-16")
+    base_texts = {n: (KS_EXAMPLE / f).read_text("utf-16") for n, f in _BASES.items()}
     result: dict[str, dict] = {}
     ksoft = win32com.client.Dispatch("KISSsoftCOM.KISSsoft")
     try:
         ksoft.SetSilentMode(True)
         ksoft.GetModule("Z070", True)
-        for label, ch in CASES:
+        for label, base_name, ch in CASES:
             t0 = time.time()
-            text = base
+            text = base_texts[base_name]
             for k, v in ch.items():
                 text = _setkey(text, k, v)
             cf = CASES_DIR / f"{label}.z70"
@@ -144,7 +153,7 @@ def main() -> None:
                          "ZPP[0].Flanke.SH", "ZP[0].KV.KV", "ZR[0].dB", "ZR[0].zn"):
                 if vals.get(must) is None:
                     raise SystemExit(f"金样案 {label} 核心量 {must} 为空——中止防陈旧值入库")
-            result[label] = {"file": _BASE, "changes": ch, "expect": vals}
+            result[label] = {"file": _BASES[base_name], "changes": ch, "expect": vals}
             print(f"{label:14} retv=True SF1={vals['ZPP[0].Fuss.SF']:.6f} "
                   f"SH={vals['ZPP[0].Flanke.SH']:.6f} ({time.time() - t0:.1f}s)", flush=True)
     finally:
