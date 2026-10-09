@@ -160,11 +160,13 @@ def main() -> None:
         "source": "KISSsoft 2026 Z070 official example S02 Hypoid (ISO 10300 Sample 2 FM) "
                   "+ file variants on live design inputs (COM GetVar, "
                   "CalculateRetVal-gated), 2026-10-03",
-        "note": "容差分档（docs/specs/bevel-hypoid-z70.md 批 4 节）：几何闭式量（Ft/ZE）1e-9；"
-                "εα 4e-5/εβ 表 1e-2；报告直取量逐位；hypoid 表消费链（Yβ/YK/ρD/R→YF/YS/"
-                "σF0/σH0/σ/SF/SH）1e-1 首版档（散点 66 案稀疏域，S02 系坐标离格最近邻）；"
+        "note": "容差分档（docs/specs/bevel-hypoid-z70.md 批 4 节；测试执行档见 "
+                "tests/unit/test_kisssoft_z70_hypoid_golden.py）：闭式量 Ft/ZE 1e-9；"
+                "εα 公式残差至 6e-3、εβ 表至 8e-2（βm1 凹包外案）；σH 链执行档 1.2e-1"
+                "（核心案 ~0，εβ/R 表域边缘三案 2~10%）；σF 链执行档 1.8e-1——σF0 装配存在"
+                "随偏置单调的未定位项 1.05~1.18（评审 M1，二期对账）+ 大轮 ρD 表 zn 域外推；"
                 "几何由内核重解——组件输入面消费收割的报告量全套。",
-        "harvest": "python tools/gen_hypoid_gear_kisssoft.py",
+        "harvest": "python ~/.zcode/skills/kisssoft-golden/scripts/gen_hypoid_gear_kisssoft.py（skill 仓；输出落点由 PYFFALO_ROOT 或 cwd 解析）",
         "cases": result,
     }, ensure_ascii=False, indent=1), encoding="utf-8")
     os.replace(tmp, GOLDEN)

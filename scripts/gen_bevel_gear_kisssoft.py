@@ -168,9 +168,10 @@ def main() -> None:
                   "+ file variants (COM GetVar, CalculateRetVal-gated), 2026-10-03",
         "note": "容差分档（docs/specs/bevel-hypoid-z70.md 批2节）：几何/ε/力/ZE/装配闭式量 1e-9；"
                 "快照表消费量（Yε/Yβ/YK/ρD/hF/R→YF/YS/σF0/σH0/σ 全链与 SF/SH）2e-3；"
-                "DIN 案 Y 系数闭式 1e-9 但齿形链共用 ISO 快照表故整体 2e-3 档；"
+                "DIN 案 Y 系数闭式 1e-9，齿形链共用 ISO 快照表、执行档 1.2e-1"
+                "（03 基座 zn2≈306 超加密域的稀疏残余，DIN 专属大 zn 表二期）；"
                 "KV/KHα 为内核自动机值回喂（组件显式输入）。v/P 展示量不对账（内核隐速度）。",
-        "harvest": "python tools/gen_bevel_gear_kisssoft.py",
+        "harvest": "python ~/.zcode/skills/kisssoft-golden/scripts/gen_bevel_gear_kisssoft.py（skill 仓；输出落点由 PYFFALO_ROOT 或 cwd 解析）",
         "cases": result,
     }, ensure_ascii=False, indent=1), encoding="utf-8")
     os.replace(tmp, GOLDEN)
