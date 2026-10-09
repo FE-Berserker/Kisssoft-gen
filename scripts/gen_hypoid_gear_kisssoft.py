@@ -39,6 +39,9 @@ VARS = [
     "ZR[1].z", "ZR[1].zn", "ZR[1].d", "ZR[1].dB", "ZR[1].x_YF", "ZkegR[1].XS",
     "ZP[0].Eps.a", "ZP[0].Eps.b", "ZP[0].Ft",
     "ZS.KA", "ZP[0].KV.KV", "ZP[0].KHa", "ZkegP[0].KHbbe",
+    "ZP[0].KV.cStr", "ZP[0].KV.cg", "ZP[0].KV.mRed",
+    "ZP[0].KV.n", "ZP[0].KV.nE1", "ZP[0].KV.ya",
+    "ZkegR[0].nnominal",
     "ZP[0].Fuss.Yeps", "ZP[0].Fuss.Ybet", "ZkegP[0].YK", "ZkegP[0].ZK",
     "ZP[0].Flanke.ZE", "ZP[0].Flanke.Zeps",
     "ZPP[0].Fuss.YF", "ZPP[0].Fuss.YS", "ZPP[0].Fuss.sFn", "ZPP[0].Fuss.hF",
@@ -46,6 +49,8 @@ VARS = [
     "ZPP[0].Fuss.sigF0", "ZPP[0].Fuss.sigF", "ZPP[0].Fuss.sigFP", "ZPP[0].Fuss.SF",
     "ZPP[1].Fuss.YF", "ZPP[1].Fuss.YS", "ZPP[1].Fuss.sigF0",
     "ZPP[1].Fuss.sigFP", "ZPP[1].Fuss.SF",
+    "ZPP[1].Fuss.hF", "ZPP[1].Fuss.roF", "ZPP[1].Fuss.alfen", "ZPP[1].Fuss.sFn",
+    "ZPP[1].Flanke.sigHP", "ZPP[1].Flanke.SH",
     "ZP[0].Flanke.sigH0", "ZP[0].Flanke.sigH",
     "ZPP[0].Flanke.sigHP", "ZPP[0].Flanke.SH",
 ]
@@ -118,8 +123,13 @@ def main() -> None:
             if not retv:
                 raise SystemExit(f"金样案 {label} 判废（CalculateRetVal=False）——不入金样")
             # 变体须真正生效：内核静默忽略的键会把官方案原值当变体结果收进
-            # 金样——逐键回读对账（ocr medium，与 bevel 收割器同款）
+            # 金样——逐键回读对账（ocr medium，与 bevel 收割器同款）。
+            # b 键豁免：hypoid 几何由内核重解，写 26 → 重解 27.82（官方金样即此口径，
+            # σF0 随 b 写入显著变化即生效证据；等值检查会误杀派生输入）
+            _derived_b = {"ZR[0].b", "ZR[1].b"}
             for ck, cv in ch.items():
+                if ck in _derived_b:
+                    continue
                 got = _norm(ksoft.GetVar(ck))
                 try:
                     took = (got is not None

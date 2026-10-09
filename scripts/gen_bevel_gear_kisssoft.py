@@ -41,6 +41,9 @@ VARS = [
     "ZR[0].BP_f.hfP", "ZR[0].BP_f.rofP", "ZR[1].BP_f.rofP",
     "ZP[0].Eps.a", "ZP[0].Eps.b", "ZP[0].Ft",
     "ZS.KA", "ZP[0].KV.KV", "ZP[0].KHa", "ZP[0].KHb", "ZkegP[0].KHbbe",
+    "ZP[0].KV.cStr", "ZP[0].KV.cg", "ZP[0].KV.mRed",
+    "ZP[0].KV.n", "ZP[0].KV.nE1", "ZP[0].KV.ya",
+    "ZkegR[0].nnominal", "ZR[1].dB",
     "ZP[0].Fuss.Yeps", "ZP[0].Fuss.Ybet", "ZkegP[0].YK", "ZkegP[0].ZK",
     "ZP[0].Flanke.ZE", "ZP[0].Flanke.Zeps",
     "ZPP[0].Fuss.YF", "ZPP[0].Fuss.YS", "ZPP[0].Fuss.sFn", "ZPP[0].Fuss.hF",
@@ -48,6 +51,8 @@ VARS = [
     "ZPP[0].Fuss.sigF0", "ZPP[0].Fuss.sigF", "ZPP[0].Fuss.sigFP", "ZPP[0].Fuss.SF",
     "ZPP[1].Fuss.YF", "ZPP[1].Fuss.YS", "ZPP[1].Fuss.sFn", "ZPP[1].Fuss.sigF0",
     "ZPP[1].Fuss.sigFP", "ZPP[1].Fuss.SF",
+    "ZPP[1].Fuss.hF", "ZPP[1].Fuss.roF", "ZPP[1].Fuss.alfen",
+    "ZPP[1].Flanke.sigHP", "ZPP[1].Flanke.SH",
     "ZP[0].Flanke.sigH0", "ZP[0].Flanke.sigH", "ZPP[0].Flanke.sigHP", "ZPP[0].Flanke.SH",
     "ZPP[0].Fa", "ZPP[0].Fr",
 ]
