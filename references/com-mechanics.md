@@ -15,7 +15,7 @@
 - 判废后 GetVar 回吐**上次计算的陈旧值**（F30 实测）——健全性过滤必须以 RetVal 前置，勿把垃圾值当真值入库。
 - GetVar 归一化：异常 / None / 空串 → None；数值串 → float；带 `¶` 尾的剥掉再试。None 不进金样。
 - 输出变量权威名录 = 报告模板 `rpt\*.RPT` 的**花括号集** + GetVar 实测；**KVAR 注册表缺登/错登**（K14 的 pH/pm、M60 的 ν 均错）勿信。
-- F020 起可用 `GetVarAsJson("模块名")` 一次 dump 全部变量（比 RPT 全且双精度）；注意判废案的部分量仍在 dump（材料链先于有效性检查）。
+- F020 起可用 `GetVarAsJson("模块名")` 一次 dump 全部变量（比 RPT 全且双精度）；注意判废案的部分量仍在 dump（材料链先于有效性检查）。**按模块可用性有别**：Z50 / K010 传任何模块名拼写均回 `{"status_code":"not_found"}`，整模块 dump 走不通时回落 RPT 花括号集 + GetVar 实测（见 Z50 / K10 两节）。
 - 报告通道：`ReportWithParameters(模板名, 输出.rtf, 0, 0)` 生成官方报告（配合 `SetSilentMode`），文本可逐项对账（Z91 预紧块反推的主证据）。
 
 ## SetVar 陈旧值陷阱与文件变体路线（最重要的一条）
@@ -50,3 +50,21 @@
 - 失败不覆盖旧档：全部案通过健全性过滤后一次性写盘。
 - 幂等：重跑与仓内金样逐字节一致；载荷内的 `harvest` 命令串是历史记录，保持原样。
 - 快照（`tools/data/**`）入 pyffalo 仓由 seed 离线消费；扫描器只产快照，不直接碰 `database.db`。
+
+## 文件变体与报告补充（Z50 beveloid 实测，2026-10-08）
+
+- **双 BOM 陷阱（最高优先）**：官方存档 `raw.decode('utf-16-le')` 后首字符仍是 U+FEFF；若写回时再前置 `b'\xff\xfe'` 则文件变双 BOM，`LoadFile` **静默回落空模块默认态**——症状三联：几何变量全 0（如 `ZR[0].z=0`）、`CalculateRetVal()` False、`Message()` 零条。正确姿势：BOM 存在时先剥 `raw[:2]` 再 decode，写回恰好一个 BOM。此坑会让整轮变体矩阵"全废"且无任何报错。
+- `ReportWithParameters(infile, outfile, show, type)` 的 **infile 必须带 `.rpt` 扩展名**（官方 COM 帮助 help/e/9748.htm）：裸模板名不报错，只出 ~11KB 纯封面 RTF。type：0=RTF（含数据级）/1=RTF/2=HTML/10=TXT/20=TXT(Unicode)/1000/1001=pprpt。
+- 报告正文语言/单位跟随**应用级设置**：`SetLanguage(7)` 只部分汉化（部分标题仍英文）；文件键 `calculation.units` 翻转不改报告单位（英制算例仍打 hp/psi）。
+- Z50（beveloid，`GetModule("Z50")`，文件内 MODULE=Z050）官方算例带 `RechSt.RechenMethID=10010`（仅几何）：强度链整体关闭——SF/SH 全 0、报告跳过强度章节、Overview 的 "Calculation method" 打空。改回模块默认 `10030` + 补载荷（`ZS.Pnominal` kW、`ZR[0].nnominal` rpm）即激活 ISO 6336:2006 方法 B 全套齿根/齿面强度。注意 `ZS.Pnominal` 在档内出现 **2 次**，须同改。
+- `GetVarAsJson` 对 Z50 传任何模块名拼写（Z050/Z50/z50/空串/*）均回 `not_found`——该通道按模块不可靠，dump 变量走 RPT 花括号集 + GetVar 实测。
+- 官方 Z50 变厚齿轮报告模板结构：`Z050la0.rpt` 为全报告（几何 5/测量 6/齿根 7/齿面 8/胶合/公差/寿命 12），强度子模板复用 Z010ISO* 系列；`Z050resd.rpt` 为结果速览表（含 `ZPP[i].Fuss.SF`）。
+
+## GUI 侧输入展开不因 COM 计算触发（K10 公差/配合冒烟，2026-10-12）
+
+- K010（`GetModule("K010")`，官方算例 `01 Tolerance Calculation.K10`）冒烟通过：`CalculateRetVal()` True，RPT 花括号集 11 个输出变量（`k10.TolName` + 两路公称/最大最小极限/上下偏差）全部有值——模块本身运行正常。
+- **公差带代号不被 COM 侧展开**：`k10.Dat[i].Toleranzfeld=H7/g6` 存档 + 计算后，逐行 `ObTol/UntTol` 仍为存储值原样吐回（预埋哨兵实测原值回显）——「代号 → 偏差」换算只发生在 GUI 录入路径；根对象亦无任何 K10 专属方法（pywin32 `GetIDsOfNames` 逐名探测 Apply/Expand/Recalc/Update Tolerance 全 MISS）。
+- 行值规整陷阱：档内写入 `ObTol < UntTol` 后读回**自动交换**（上限取 max、下限取 min）——哨兵实验判读时勿把交换误当换算。
+- 对账口径：官方算例存档内的已展开偏差可信（H7/80 → +0.030/0、H7/16 → +0.018/0，实测符合 ISO 286-1）；要新组合就自算 ISO 286 或走 GUI 授权存档，勿指望 COM 侧展开。
+- 标量块 `k10.TolName` / `k10.Nennmass1/2` / `ObMass1/2` / `UntMass1/2` 是**活的子计算器**（疑由档内 `TolID` + 行数据实时推导：公称实测 = 首行名义 − 其余行名义之和，两点吻合；语义未钉死）——对账先钉口径，勿当算例正文的确定性输出。
+- 方法存在性快查：comtypes 缺席时用 pywin32 `ks._oleobj_.GetIDsOfNames(0, 名)` 逐名探测（本节 K10 方法面即由此钉死）。
