@@ -33,6 +33,6 @@
 | Z09A / M02B / M02C 花键 + AGMA 6123 | 对账期探针为 tmp 一次性脚本（`spline_com_dump*.ps1` 等，tmp 不入库，重跑再生） | `tests/golden/spline/kisssoft_spline.json` | docs/KISSSOFT.md「花键专项对账」「AGMA 6123-C16 专项」 |
 | M010 多层过盈 | 探针在 pyffalo tmp/spline_recon（M010 对账会话）；内核外压直给口径已钉死 | `tests/golden/interference_fit_multi/kisssoft_m010_02.json` | docs/specs/multi-interference-fit.md |
 | DIN 5466 | step-0 探针走通后**缓建**（无 ground truth） | — | docs/KISSSOFT.md「DIN 5466 路径」 |
-| K10 公差/配合 | 2026-10-12 COM 冒烟（探针为 pyffalo tmp 一次性脚本）：模块正常运行（官方算例 CalculateRetVal=True）；**公差带代号不在 COM 侧展开**（哨兵回显 + ObTol<UntTol 自动交换），对账用存档已展开偏差（H7 实测符合 ISO 286）或自算，ToleranceAnalysis 侧引用先看机制节 | — | 本仓 com-mechanics.md「GUI 侧输入展开不因 COM 计算触发」 |
+| K10 公差/配合 | 2026-10-12 COM 冒烟 + 组件对账完成（探针为 pyffalo tmp 一次性脚本）：模块正常运行（官方算例 CalculateRetVal=True）；**公差带代号不在 COM 侧展开**（哨兵回显 + ObTol<UntTol 自动交换），对账用存档已展开偏差（H7 锚点 pyffalo 逐位一致）；全矩阵对账经 isofits/GB/Δ 表三源完成，pyffalo 侧 p/u/t/m/M/P/T/U 表错误已随 task/tolerance-table-fix 修正入 main（04c044f1） | — | 本仓 com-mechanics.md「GUI 侧输入展开不因 COM 计算触发」 |
 
 后续新模块的收割器**写进本仓 scripts/ 并更新本表**，不再回 pyffalo tools/。
