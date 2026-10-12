@@ -13,6 +13,7 @@
 | K14 赫兹接触 | gen_hertz_k14_kisssoft.py（`--scan` δ 扫描存证） | HertzContact | `tools/data/hertz_k14/norden_scan.json`、`tests/golden/hertz/` | docs/specs/k14-hertz.md |
 | M40 螺栓 VDI 2230 | gen_bolt_m40_kisssoft.py（金样）、scan_bolt_m40_kisssoft.py（63+ 变体标定扫描） | Bolt、BoltJoint、FlangeBolt | `tools/data/bolt/m40_scan.json.gz`、`tests/golden/bolt/` | docs/specs/bolt-kisssoft-m40.md |
 | M60 Hirth 齿盘 | gen_hirth_coupling_kisssoft.py（`--profile` 目录 99 行快照） | HirthCoupling | `tools/data/hirth_coupling/voith_profile.csv`、`tests/golden/hirth_coupling/` | docs/specs/hirth-serration-m60.md |
+| M10 圆柱过盈 | gen_interference_fit_kisssoft.py（2026-10-12 新建：官方算例 01/02 两案 206 键，变量名录 = rpt/M010*.RPT 花括号集 227 键；含死键/派生快照四探针甄别） | InterferenceFit | `tests/golden/interference_fit/kisssoft_m10.json` | docs/KISSSOFT.md 单层过盈节 |
 | M1B 圆锥过盈 | gen_conical_fit_kisssoft.py | ConicalInterferenceFit | `tests/golden/conical_fit/` | docs/specs/conical-interference-fit-m1b.md |
 | M1C 夹紧连接 | gen_clamp_connection_kisssoft.py（**新收割器标准骨架**） | ClampConnection | `tests/golden/clamp_connection/` | docs/specs/clamp-connection-m1c.md |
 | M2A 平键 | gen_key_joint_kisssoft.py（`--scan-klambda` 672×2 曲面、`--profile` DIN 6885 剖面） | KeyJoint | `tools/data/key_joint/`、`tests/golden/key_joint/` | docs/specs/key-joint-m2a.md |
@@ -31,7 +32,7 @@
 | 模块 | 说明 | 金样 | 权威文档 |
 | --- | --- | --- | --- |
 | Z09A / M02B / M02C 花键 + AGMA 6123 | 对账期探针为 tmp 一次性脚本（`spline_com_dump*.ps1` 等，tmp 不入库，重跑再生） | `tests/golden/spline/kisssoft_spline.json` | docs/KISSSOFT.md「花键专项对账」「AGMA 6123-C16 专项」 |
-| M010 多层过盈 | 探针在 pyffalo tmp/spline_recon（M010 对账会话）；内核外压直给口径已钉死 | `tests/golden/interference_fit_multi/kisssoft_m010_02.json` | docs/specs/multi-interference-fit.md |
+| M010 多层过盈 | 常驻收割器无（探针在 pyffalo tmp/spline_recon，M010 对账会话）；**主压力/安全系数键已由 M10 收割器顺带钉死**（`m01r.p[0..2]` / `m01r.si[0..2]` 与单层件同键同义，可交叉复核） | `tests/golden/interference_fit_multi/kisssoft_m010_02.json` | docs/specs/multi-interference-fit.md |
 | DIN 5466 | step-0 探针走通后**缓建**（无 ground truth） | — | docs/KISSSOFT.md「DIN 5466 路径」 |
 | K10 公差/配合 | 2026-10-12 COM 冒烟 + 组件对账完成（探针为 pyffalo tmp 一次性脚本）：模块正常运行（官方算例 CalculateRetVal=True）；**公差带代号不在 COM 侧展开**（哨兵回显 + ObTol<UntTol 自动交换），对账用存档已展开偏差（H7 锚点 pyffalo 逐位一致）；全矩阵对账经 isofits/GB/Δ 表三源完成，pyffalo 侧 p/u/t/m/M/P/T/U 表错误已随 task/tolerance-table-fix 修正入 main（04c044f1） | — | 本仓 com-mechanics.md「GUI 侧输入展开不因 COM 计算触发」 |
 

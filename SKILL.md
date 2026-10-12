@@ -24,6 +24,8 @@ pyffalo 运行时**不依赖** KISSsoft；本 skill 承载全部「调用 KISSso
 | 例库镜像 | gen_kisssoft_examples.py | 官方算例库 → pyffalo `examples/kisssoft/` 逐模块映射生成 |
 | 收割器 / 扫描器 | gen_&lt;模块&gt;_kisssoft.py、harvest_kisssoft_w10/z91.py、scan_bolt_m40_kisssoft.py | 金样收割（`tests/golden/`）+ 系数表扫描（`tools/data/`），逐件对应关系见 references/module-index.md |
 
+收割器的 `VARS` 名录**一律从 RPT 模板花括号集来**：`C:\KISSsoft 2026\rpt\<模块>*.RPT` 是 **UTF-16**，须 `read_bytes().decode("utf-16-le")` 后正则 `\{([A-Za-z0-9_.\[\]]+)\}`（按 utf-8/latin-1 读会得 0 键，像是「模板没变量」）。这是唯一能一次拿全结果侧变量名的路子——凭直觉猜族名会漏，且漏掉的往往正是主输出键。
+
 ## 标准对账工作流（新模块移植 / 既有模块追口径共用）
 
 1. **读权威文档**：pyffalo `docs/KISSSOFT.md` 对应专项节（公式链 + 机制坑全录）与 `docs/specs/<任务>.md`。勿凭记忆写公式。
@@ -47,7 +49,10 @@ try:
     val = ksoft.GetVar("m01c.SH")      # 异常/None/空串归一化为 None 再入金样
 finally:
     ksoft.ReleaseModule()              # 跨模块切换必须先释放，否则 GetVar 全空
+    del ksoft                          # 批量收割时每案独立会话，见下
 ```
+
+**一案一个 COM 会话**（批量收割铁律）：给 `GetModule` 传无效模块名会**毒化整个会话**——之后即使换回正确模块名，`CalculateRetVal()` 恒 False、`GetVar` 全空，症状与「模块坏了」无法区分。探错一个名字就可能静默废掉后面全部案例。跨案复用会话只在模块名全对时可行，收割器一律每案重新 `Dispatch`（见 references/com-mechanics.md §会话中毒）。
 
 改输入一律**文件变体路线**（UTF-16 紧凑 `key=value¶` 行尾、等号两侧无空格、锚定行首替换且命中数 ≠1 即废），不要 SetVar——陈旧值陷阱下 Calculate 照样返回成功而结果不刷新。
 
